@@ -1,0 +1,88 @@
+<div>
+  <h2 id="page-heading" data-cy="OrdineHeading">
+    <span>Storico ordini</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="viewOrdini()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Aggiorna</span>
+      </button>
+    </div>
+    <button class="btn btn-info mr-2" (click)="printPDF()">
+      <span>Stampa PDF</span>
+    </button>
+    <button class="btn btn-info mr-2" (click)="printEXCEL()">
+      <span>Stampa EXCEL</span>
+    </button>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="ordine?.length === 0">
+    <span>Non hai ancora nessun ordine!</span>
+  </div>
+
+  <div>
+    <p>{{userE?.user?.firstName}} {{userE?.user?.lastName}}<br>
+      {{cliente?.userExtra?.indirizzo}}<br>
+      {{cliente?.userExtra?.telefono}}</p>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="ordine && ordine.length > 0">
+    <table id="excel-table" class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Acquistato</span></th>
+          <th scope="col"><span>Spedito</span></th>
+          <th scope="col"><span>Quantita</span></th>
+          <th scope="col"><span>Dettagli Cliente</span></th>
+          <th scope="col"><span>ID Cliente</span></th>
+          <th scope="col"><span>Prodotto</span></th>
+          <th scope="col"><span>Totale</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let o of ordine; trackBy: trackId" data-cy="entityTable">
+          <td>{{ o.id }}</td>
+          <td>{{ o.acquistato }}</td>
+          <td>{{ o.spedito }}</td>
+          <td>{{ o.quantita }}</td>
+          <td><button class="btn btn-primary" (click)="wrapper(o.cliente?.id!)">
+              Dettagli</button></td>
+          <td>{{ o.cliente?.id }}</td>
+          <td>
+            <div *ngIf="o.prodotto">
+              <a [routerLink]="['/prodotto', o.prodotto?.id, 'view']">{{ o.prodotto?.nome }}</a>
+            </div>
+          </td>
+          <td>{{ o.totale | number: "1.1-2"}} €</td>
+          <td class="text-right">
+            <div class="btn-group">
+
+              <button type="submit" [routerLink]="['/ordine', o.id, 'spedito']" *ngIf="!o.spedito"
+                class="btn btn-success btn-sm" data-cy="entityEditButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-check-lg" viewBox="0 0 16 16">
+                  <path
+                    d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                </svg>
+                <span class="d-none d-md-inline">Contrassegna come spedito</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/ordine', o.id, 'view']" class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Dettagli</span>
+              </button>
+
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

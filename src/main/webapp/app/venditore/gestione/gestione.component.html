@@ -1,0 +1,88 @@
+<div>
+  <h2 id="page-heading" data-cy="ProdottoHeading">
+    <span>I tuoi prodotti</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="viewProdotti()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Aggiorna</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-prodotto"
+        [routerLink]="['/prodotto/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Aggiungi un nuovo prodotto </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="prodotto?.length === 0">
+    <span>Non hai ancora nessun prodotto</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="prodotto && prodotto.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Nome</span></th>
+          <th scope="col"><span>Descrizione</span></th>
+          <th scope="col"><span>Prezzo</span></th>
+          <th scope="col"><span>Disponibilita</span></th>
+          <th scope="col"><span>Categoria</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of prodotto; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/prodotto', p.id, 'view']">{{ p.id }}</a>
+          </td>
+          <td>{{ p.nome }}</td>
+          <td>{{ p.descrizione }}</td>
+          <td>{{ p.prezzo }} €</td>
+          <td>{{ p.disponibilita }}</td>
+          <td>{{ p.categoria }}</td>
+          <td>{{ p.imageUrl }}</td>
+          <!-- <td>{{ p.venditore?.id }}</td> -->
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/prodotto', p.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Dettagli</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/prodotto', p.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Modifica</span>
+              </button>
+
+              <button type="submit" (click)="delete(p)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Elimina</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

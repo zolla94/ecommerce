@@ -1,0 +1,55 @@
+<div>
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <h1 data-cy="loginTitle">Accedi</h1>
+      <div class="alert alert-danger" *ngIf="authenticationError" data-cy="loginError">
+        <strong>Nome utente o password errati!</strong> Per favore controlla le tue credenziali e riprova.
+      </div>
+      <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
+        <div class="form-group">
+          <label class="username-label" for="username">User</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            id="username"
+            placeholder="Username"
+            formControlName="username"
+            #username
+            data-cy="username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder="Password"
+            formControlName="password"
+            data-cy="password"
+          />
+        </div>
+
+        <div class="form-check">
+          <label class="form-check-label" for="rememberMe">
+            <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe" />
+            <span>Ricordami</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-warning" data-cy="submit">Sign in</button>
+      </form>
+      <div class="mt-3 alert alert-warning">
+        <a class="alert-link" routerLink="/account/reset/request" data-cy="forgetYourPasswordSelector">Password dimenticata?</a>
+      </div>
+
+      <div class="alert alert-success">
+        <span>Non hai ancora un account?</span>
+        <a class="alert-link" routerLink="/account/register">Resgistrati!</a>
+      </div>
+    </div>
+  </div>
+</div>

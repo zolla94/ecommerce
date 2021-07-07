@@ -1,0 +1,102 @@
+<div>
+  <h2 id="page-heading" data-cy="ProdottoHeading">
+    <span id="prova">{{title}}</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="vetrina()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Aggiorna</span>
+      </button>
+      {{state[5]}}
+    </div>
+  </h2>
+
+  <div class="container">
+    <div class="row">
+      <div class="mb-3 mr-2">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Cerca">
+      </div>
+
+      <div class="mb-3 ml-2">
+        <select class="form-control" #cat name="search" [(ngModel)]="searchText">
+          <option selected value="">Scegli una cateoria</option>
+          <option>ACTIONFIGURE</option>
+          <option>ARREDAMENTO</option>
+          <option>ALTRO</option>
+        </select>
+      </div>
+
+      <div class="table-responsive table table-striped" id="entities" *ngIf="prodotti && prodotti.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col"><span>Nome</span></th>
+              <th scope="col"><span>Descrizione</span></th>
+              <th scope="col"><span>Prezzo</span></th>
+              <th scope="col"><span>Disponibilità</span></th>
+              <th scope="col"><span>Categoria</span></th>
+              <th scope="col"><span>Quantità</span></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let prodotto of prodotti | filter:searchText" data-cy="entityTable">
+              <td>{{ prodotto.nome }}</td>
+              <td>{{ prodotto.descrizione }}</td>
+              <!-- <td>{{ prodotto.prezzo | scontiSettimanali: prodotto.categoria | number: "1.1-2" }} €</td> -->
+              <td *ngIf="flag[prodotto.id] === true;else templateName" style="color: red;" id="{{prodotto.id}}">{{ prodotto.prezzo | number: "1.1-2" }} €</td>
+              <ng-template #templateName>{{ prodotto.prezzo | number: "1.1-2" }} €</ng-template>
+              <td>{{ prodotto.disponibilita }}
+                <button *ngIf="prodotto.disponibilita === 0" class="btn btn-warning" (click)="alertMe(prodotto)">Avvisami</button>  
+              </td>
+              <td>{{ prodotto.categoria }}</td>
+              <td>
+                <select id="quantita" name="quantita" #quant (change)='setQuant(quant.value)'>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                </select>
+              </td>
+              <td class="text-right">
+                <div class="btn-group">
+                  <button type="submit" [routerLink]="['/prodotto', prodotto.id, 'cart', quant.value, prodotto.prezzo ]" class="btn btn-success btn-sm"
+                    data-cy="entityEditButton" (click)='open()'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag"
+                      viewBox="0 0 16 16">
+                      <path
+                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+                    </svg>
+                    <span class="d-none d-md-inline">Aggiungi al carrello</span>
+                  </button>
+    
+                  <button type="submit" [routerLink]="['/prodotto', prodotto.id, 'view']" class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">Dettagli</span>
+                  </button>
+    
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="prodotti?.length === 0">
+    <span>Non ci sono prodotti disponibili</span>
+  </div>
+
+</div>

@@ -1,0 +1,69 @@
+<div>
+    <h2 id="page-heading" data-cy="OrdineHeading">
+      <span>Il tuo riepilogo ordini:</span>
+  
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+          <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+          <span>Aggiorna</span>
+        </button>
+      </div>
+        <button class="btn btn-info mr-2" (click)="printPDF()">
+          <span>Stampa PDF</span>
+        </button>
+        <button class="btn btn-info mr-2" (click)="printEXCEL()">
+          <span>Stampa EXCEL</span>
+        </button>
+    </h2>
+  
+    <jhi-alert-error></jhi-alert-error>
+  
+    <jhi-alert></jhi-alert>
+  
+    <div class="alert alert-warning" id="no-result" *ngIf="ordini?.length === 0">
+      <span>Non hai ancora effettuato nessun ordine</span>
+    </div>
+  
+    <div class="table-responsive" id="entities" *ngIf="ordini && ordini.length > 0">
+      <table id="excel-table" class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span>ID</span></th>
+            <th scope="col"><span>Spedito</span></th>
+            <th scope="col"><span>Quantita</span></th>
+            <th scope="col"><span>Venditore</span></th>
+            <th scope="col"><span>Prodotto</span></th>
+            <th scope="col"><span>Totale</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ordine of ordini; trackBy: trackId" data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/ordine', ordine.id, 'view']">{{ ordine.id }}</a>
+            </td>
+            <td>{{ ordine.spedito }}</td>
+            <td>{{ ordine.quantita }}</td>
+            <td>{{ ordine.venditore?.id }}</td>
+            <td>
+              <div *ngIf="ordine.prodotto">
+                <a [routerLink]="['/prodotto', ordine.prodotto?.id, 'view']">{{ ordine.prodotto?.nome }}</a>
+              </div>
+            </td>
+            <td>{{ ordine.totale | number: "1.1-2" }} €</td>
+            <td class="text-right">
+              <div class="btn-group">
+  
+                <button type="submit" (click)="delete(ordine)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline">Elimina ordine</span>
+                </button>
+                
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,0 +1,7 @@
+entity Sconto {
+	nome String,
+    giorni String,
+    valore Integer,
+    cat String,
+	attivo Boolean
+}

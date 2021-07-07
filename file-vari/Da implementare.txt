@@ -1,0 +1,16 @@
+Da implementare:
+
+Verifica con mail - COMPLETE
+Acquisto multiplo - MASSIMA PRIORITA' (cliente) - COMPLETE
+Vedere nome cliente (e con tendina hover escono gli altri dati), venditore ecc. - COMPLETE
+Togliere vetrina da venditore - COMPLETE
+Migliorare layout
+Sicurezza e ruoli
+Eliminare tasto spedizione se spedito=true (cliente) - COMPLETE
+Controlli su login 
+Modifica indirizzo - COMPLETE
+Ridimensionare codice
+Rendere sconto visibile al cliente (tipo badge bootstrap) - COMPLETE
+Sconti customizzabili - COMPLETE
+Togliere/sistemare vetrina ai non loggati
+ALERT CON FLAG SE DISP === 0

@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="ordine">
+      <h2 data-cy="ordineDetailsHeading"><span>Ordine</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ ordine.id }}</span>
+        </dd>
+        <dt><span>Acquistato</span></dt>
+        <dd>
+          <span>{{ ordine.acquistato }}</span>
+        </dd>
+        <dt><span>Spedito</span></dt>
+        <dd>
+          <span>{{ ordine.spedito }}</span>
+        </dd>
+        <dt><span>Quantita</span></dt>
+        <dd>
+          <span>{{ ordine.quantita }}</span>
+        </dd>
+        <dt><span>Totale</span></dt>
+        <dd>
+          <span>{{ ordine.totale }}</span>
+        </dd>
+        <dt><span>Cliente</span></dt>
+        <dd>
+          <div *ngIf="ordine.cliente">
+            <a [routerLink]="['/cliente', ordine.cliente?.id, 'view']">{{ ordine.cliente?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Prodotto</span></dt>
+        <dd>
+          <div *ngIf="ordine.prodotto">
+            <a [routerLink]="['/prodotto', ordine.prodotto?.id, 'view']">{{ ordine.prodotto?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Venditore</span></dt>
+        <dd>
+          <div *ngIf="ordine.venditore">
+            <a [routerLink]="['/venditore', ordine.venditore?.id, 'view']">{{ ordine.venditore?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/ordine', ordine.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

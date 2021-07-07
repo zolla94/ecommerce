@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="sconto">
+      <h2 data-cy="scontoDetailsHeading"><span>Sconto</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ sconto.id }}</span>
+        </dd>
+        <dt><span>Nome</span></dt>
+        <dd>
+          <span>{{ sconto.nome }}</span>
+        </dd>
+        <dt><span>Giorni</span></dt>
+        <dd>
+          <span>{{ sconto.giorni }}</span>
+        </dd>
+        <dt><span>Valore</span></dt>
+        <dd>
+          <span>{{ sconto.valore }}</span>
+        </dd>
+        <dt><span>Cat</span></dt>
+        <dd>
+          <span>{{ sconto.cat }}</span>
+        </dd>
+        <dt><span>Attivo</span></dt>
+        <dd>
+          <span>{{ sconto.attivo }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/sconto', sconto.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

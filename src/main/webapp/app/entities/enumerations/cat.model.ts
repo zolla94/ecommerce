@@ -1,0 +1,7 @@
+export enum Cat {
+  ACTIONFIGURE = 'ACTIONFIGURE',
+
+  ARREDAMENTO = 'ARREDAMENTO',
+
+  ALTRO = 'ALTRO',
+}

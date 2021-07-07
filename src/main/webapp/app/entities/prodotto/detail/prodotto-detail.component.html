@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="prodotto">
+      <h2 data-cy="prodottoDetailsHeading"><span>Prodotto</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ prodotto.id }}</span>
+        </dd>
+        <dt><span>Nome</span></dt>
+        <dd>
+          <span>{{ prodotto.nome }}</span>
+        </dd>
+        <dt><span>Descrizione</span></dt>
+        <dd>
+          <span>{{ prodotto.descrizione }}</span>
+        </dd>
+        <dt><span>Prezzo</span></dt>
+        <dd>
+          <span>{{ prodotto.prezzo }}</span>
+        </dd>
+        <dt><span>Disponibilita</span></dt>
+        <dd>
+          <span>{{ prodotto.disponibilita }}</span>
+        </dd>
+        <dt><span>Categoria</span></dt>
+        <dd>
+          <span>{{ prodotto.categoria }}</span>
+        </dd>
+        <dt><span>Image Url</span></dt>
+        <dd>
+          <span>{{ prodotto.imageUrl }}</span>
+        </dd>
+        <dt><span>Venditore</span></dt>
+        <dd>
+          <div *ngIf="prodotto.venditore">
+            <a [routerLink]="['/venditore', prodotto.venditore?.id, 'view']">{{ prodotto.venditore?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Indietro</span>
+      </button>
+
+      <button *jhiHasAnyAuthority="['ROLE_SELLER']" type="button" [routerLink]="['/prodotto', prodotto.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Modifica</span>
+      </button>
+    </div>
+  </div>
+</div>

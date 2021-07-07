@@ -1,0 +1,47 @@
+entity UserExtra {
+	indirizzo String,
+    telefono String,
+    ruolo Role
+}
+
+entity Cliente {}
+
+entity Venditore {}
+
+entity Prodotto {
+	nome String required,
+    descrizione String required,
+    prezzo Double required,
+    disponibilita Integer,
+    categoria Cat required,
+    imageUrl String
+}
+
+entity Ordine {
+	acquistato Boolean required,
+    spedito Boolean,
+    quantita Integer required
+}
+
+enum Cat {
+    ACTIONFIGURE, ARREDAMENTO, ALTRO 
+}
+
+enum Role {
+	VENDITORE, CLIENTE
+}
+
+relationship ManyToOne {
+	Ordine to Cliente
+    Ordine to Prodotto
+    Prodotto to Venditore
+    Ordine to Venditore
+}
+
+relationship OneToOne {
+	UserExtra to User
+    Cliente to UserExtra
+    Venditore to UserExtra
+}
+
+service all with serviceImpl

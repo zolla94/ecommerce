@@ -1,0 +1,8 @@
+{
+  "generator-jhipster:7.0.1": {
+    "promptValues": {
+      "packageName": "it.zolla.ecommerce",
+      "nativeLanguage": "it"
+    }
+  }
+}

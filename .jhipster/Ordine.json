@@ -1,0 +1,54 @@
+{
+  "name": "Ordine",
+  "fields": [
+    {
+      "fieldName": "acquistato",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "spedito",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "quantita",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "totale",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cliente",
+      "otherEntityRelationshipName": "ordine",
+      "relationshipName": "cliente"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "prodotto",
+      "otherEntityRelationshipName": "ordine",
+      "relationshipName": "prodotto"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "venditore",
+      "otherEntityRelationshipName": "ordine",
+      "relationshipName": "venditore"
+    }
+  ],
+  "entityTableName": "ordine",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210510152736"
+}

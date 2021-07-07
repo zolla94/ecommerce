@@ -1,0 +1,94 @@
+<div>
+  <h2 id="page-heading" data-cy="OrdineHeading">
+    <span>Il tuo carrello:</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="vediCarrello()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Aggiorna</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="ordini?.length === 0">
+    <span>Il tuo carrello è vuoto</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="ordini && ordini.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Seleziona</span></th>
+          <th scope="col"><span>Identificativo d'ordine</span></th>
+          <th scope="col"><span>Quantita</span></th>
+          <th scope="col"><span>Prodotto</span></th>
+          <th scope="col"><span>Venditore</span></th>
+          <th scope="col"><span>Totale</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ordine of ordini; let i=index; trackBy: trackId" data-cy="entityTable">
+          <input type="checkbox" class="mt-3 ml-3" multiple [(ngModel)]="check[i]">
+          <td>
+            <a [routerLink]="['/ordine', ordine.id, 'view']">{{ ordine.id }}</a>
+          </td>
+          <td>{{ ordine.quantita }}</td>
+          <td>
+            <div *ngIf="ordine.prodotto">
+              <a [routerLink]="['/prodotto', ordine.prodotto?.id, 'view']">{{ ordine.prodotto?.nome }}</a>
+            </div>
+          </td>
+          <td>{{ ordine.venditore?.id }}</td>
+          <!-- <td id = {{ordine.id}} title="{{ ordine.totale! * ordine.quantita! }}"> -->
+          <!-- <td id={{ordine.id}} title="{{ ordine.prodotto?.prezzo! * ordine.quantita! }}">
+            {{ ordine.prodotto?.prezzo! * ordine.quantita! | number: "1.1-2" }}
+            €</td> -->
+          <td *ngIf="flag[ordine.id!] === true;" style="color: red;" id={{ordine.id}}
+            title="{{ ordine.prodotto?.prezzo! * ordine.quantita! }}">
+            {{ ordine.prodotto?.prezzo! * ordine.quantita! | number: "1.1-2" }}
+            <!-- {{ ordine.totale! * ordine.quantita! }} -->
+            €</td>
+          <td *ngIf="flag[ordine.id!] === false;" id={{ordine.id}}
+            title="{{ ordine.prodotto?.prezzo! * ordine.quantita! }}">
+            {{ ordine.prodotto?.prezzo! * ordine.quantita! | number: "1.1-2" }}
+            <!-- {{ ordine.totale! * ordine.quantita! }} -->
+            €</td>
+
+          <!-- <ng-template #templateName title="{{ ordine.prodotto?.prezzo! * ordine.quantita! }}" id={{ordine.id}}> {{ ordine.prodotto?.prezzo! * ordine.quantita! | number: "1.1-2" }}
+            €</ng-template> -->
+
+          <td class="text-right">
+            <div class="btn-group">
+
+              <button type="submit"
+                [routerLink]="['/ordine', ordine.id, 'acquista', ordine.prodotto?.disponibilita, ordine.prodotto?.id, ordine.prodotto?.prezzo! * ordine.quantita! ]"
+                class="btn btn-success btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Conferma acquisto</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/ordine', ordine.id, 'edit']" class="btn btn-primary btn-sm"
+                data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Modifica</span>
+              </button>
+
+              <button type="submit" (click)="delete(ordine)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Elimina dal carrello</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <button (click)="getSelected()" class="btn btn-warning">Acquista selezionati</button>
+    {{cat}}
+  </div>

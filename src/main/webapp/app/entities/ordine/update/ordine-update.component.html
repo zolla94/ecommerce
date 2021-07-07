@@ -1,0 +1,102 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-ordine-heading" data-cy="OrdineCreateUpdateHeading">Crea o modifica un ordine</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div *jhiHasAnyAuthority="['ROLE_SELLER']" class="form-group">
+          <label class="form-control-label" for="field_acquistato">Acquistato</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="acquistato"
+            id="field_acquistato"
+            data-cy="acquistato"
+            formControlName="acquistato"
+          />
+          <div *ngIf="editForm.get('acquistato')!.invalid && (editForm.get('acquistato')!.dirty || editForm.get('acquistato')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('acquistato')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div *jhiHasAnyAuthority="['ROLE_SELLER']" class="form-group">
+          <label class="form-control-label" for="field_spedito">Spedito</label>
+          <input type="checkbox" class="form-check" name="spedito" id="field_spedito" data-cy="spedito" formControlName="spedito" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_quantita">Quantita</label>
+          <input type="number" class="form-control" name="quantita" id="field_quantita" data-cy="quantita" formControlName="quantita" />
+          <div *ngIf="editForm.get('quantita')!.invalid && (editForm.get('quantita')!.dirty || editForm.get('quantita')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('quantita')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('quantita')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div hidden class="form-group">
+          <label class="form-control-label" for="field_cliente">Cliente</label>
+          <select class="form-control" id="field_cliente" data-cy="cliente" name="cliente" formControlName="cliente">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="clienteOption.id === editForm.get('cliente')!.value?.id ? editForm.get('cliente')!.value : clienteOption"
+              *ngFor="let clienteOption of clientesSharedCollection; trackBy: trackClienteById"
+            >
+              {{ clienteOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div hidden class="form-group">
+          <label class="form-control-label" for="field_prodotto">Prodotto</label>
+          <select class="form-control" id="field_prodotto" data-cy="prodotto" name="prodotto" formControlName="prodotto">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="prodottoOption.id === editForm.get('prodotto')!.value?.id ? editForm.get('prodotto')!.value : prodottoOption"
+              *ngFor="let prodottoOption of prodottosSharedCollection; trackBy: trackProdottoById"
+            >
+              {{ prodottoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div hidden class="form-group">
+          <label class="form-control-label" for="field_venditore">Venditore</label>
+          <select class="form-control" id="field_venditore" data-cy="venditore" name="venditore" formControlName="venditore">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="venditoreOption.id === editForm.get('venditore')!.value?.id ? editForm.get('venditore')!.value : venditoreOption"
+              *ngFor="let venditoreOption of venditoresSharedCollection; trackBy: trackVenditoreById"
+            >
+              {{ venditoreOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Annulla</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Salva</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

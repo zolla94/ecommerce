@@ -1,0 +1,94 @@
+<div>
+  <h2 id="page-heading" data-cy="ProdottoHeading">
+    <span>Prodottos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-prodotto"
+        [routerLink]="['/prodotto/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Prodotto </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="prodottos?.length === 0">
+    <span>No prodottos found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="prodottos && prodottos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Nome</span></th>
+          <th scope="col"><span>Descrizione</span></th>
+          <th scope="col"><span>Prezzo</span></th>
+          <th scope="col"><span>Disponibilita</span></th>
+          <th scope="col"><span>Categoria</span></th>
+          <th scope="col"><span>Image Url</span></th>
+          <th scope="col"><span>Venditore</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prodotto of prodottos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/prodotto', prodotto.id, 'view']">{{ prodotto.id }}</a>
+          </td>
+          <td>{{ prodotto.nome }}</td>
+          <td>{{ prodotto.descrizione }}</td>
+          <td>{{ prodotto.prezzo }}</td>
+          <td>{{ prodotto.disponibilita }}</td>
+          <td>{{ prodotto.categoria }}</td>
+          <td>{{ prodotto.imageUrl }}</td>
+          <td>
+            <div *ngIf="prodotto.venditore">
+              <a [routerLink]="['/venditore', prodotto.venditore?.id, 'view']">{{ prodotto.venditore?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/prodotto', prodotto.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/prodotto', prodotto.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(prodotto)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

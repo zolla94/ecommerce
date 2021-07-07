@@ -1,0 +1,36 @@
+{
+  "name": "Sconto",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "giorni",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "valore",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "cat",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "attivo",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "sconto",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210611124357"
+}

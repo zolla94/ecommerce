@@ -1,0 +1,8 @@
+http://www.mokabyte.it/2016/09/jhipster-1/
+https://www.jhipster.tech/
+https://www.youtube.com/watch?v=OZEChAowlcI
+https://medium.com/danielpadua/java-spring-boot-intellij-idea-b919b0097a0
+https://www.ionos.it/digitalguide/siti-web/programmazione-del-sito-web/jhipster/
+https://www.youtube.com/watch?v=-4gUDncO11U
+https://www.keycloak.org/docs/latest/getting_started/
+https://www.youtube.com/results?search_query=jhipster+angular

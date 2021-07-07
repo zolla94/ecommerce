@@ -1,0 +1,92 @@
+<div>
+  <h2 id="page-heading" data-cy="OrdineHeading">
+    <span>Ordines</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-ordine"
+        [routerLink]="['/ordine/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Ordine </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="ordines?.length === 0">
+    <span>No ordines found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="ordines && ordines.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Acquistato</span></th>
+          <th scope="col"><span>Spedito</span></th>
+          <th scope="col"><span>Quantita</span></th>
+          <th scope="col"><span>Totale</span></th>
+          <th scope="col"><span>Cliente</span></th>
+          <th scope="col"><span>Prodotto</span></th>
+          <th scope="col"><span>Venditore</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ordine of ordines; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/ordine', ordine.id, 'view']">{{ ordine.id }}</a>
+          </td>
+          <td>{{ ordine.acquistato }}</td>
+          <td>{{ ordine.spedito }}</td>
+          <td>{{ ordine.quantita }}</td>
+          <td>{{ ordine.totale }}</td>
+          <td>
+            <div *ngIf="ordine.cliente">
+              <a [routerLink]="['/cliente', ordine.cliente?.id, 'view']">{{ ordine.cliente?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="ordine.prodotto">
+              <a [routerLink]="['/prodotto', ordine.prodotto?.id, 'view']">{{ ordine.prodotto?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="ordine.venditore">
+              <a [routerLink]="['/venditore', ordine.venditore?.id, 'view']">{{ ordine.venditore?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/ordine', ordine.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/ordine', ordine.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(ordine)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

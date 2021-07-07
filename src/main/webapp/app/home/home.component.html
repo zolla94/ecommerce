@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-3">
+    <span class="hipster img-fluid rounded"></span>
+  </div>
+
+  <div class="col-md-9">
+    
+    <div [ngSwitch]="isAuthenticated()">
+      <h1 class="display-4" *ngIf="account">Ciao, {{ account.firstName }}!</h1>
+      <div class="alert alert-warning" *ngSwitchCase="true">
+        <span id="home-logged-message" *ngIf="account">Sei loggato come "{{ account.login }}".</span>
+      </div>
+      
+      <h1 class="display-4" *ngSwitchCase="false">Benvenuto su ZollArt!</h1>
+      <p *ngSwitchCase="false" class="lead">Effettua il login per cominciare a fare acquisti!</p>
+
+      <button *ngSwitchCase="false" class="btn btn-warning mb-3" (click)="login()">Log in</button>
+
+      <div class="alert alert-success" *ngSwitchCase="false">
+        <span>Sei nuovo?</span>&nbsp;
+        <a class="alert-link" routerLink="account/register">Inizia ora!</a>
+      </div>
+    </div>
+
+    <!-- <div class="alert alert-warning" *jhiHasAnyAuthority="'ROLE_ADMIN' && 'ROLE_USER'">PROVA</div> -->
+    <!-- <div class="alert alert-warning" *jhiHasAnyAuthority="['ROLE_SELLER', 'ROLE_CUSTOMER', 'ROLE_USER']">PROVA</div> -->
+  </div>
+</div>
